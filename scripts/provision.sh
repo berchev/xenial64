@@ -63,7 +63,17 @@ echo "Zeroing device to make space..."
 dd if=/dev/zero of=/EMPTY bs=1M
 rm -f /EMPTY
 
-# Install nginx 
-sudo apt-get update
-sudo apt-get install -y nginx
+# Install vim, ruby, curl
+apt-get update
+apt-get install -y vim ruby curl
+
+# Install all needed for Kitchen tool
+apt-get install -y rbenv ruby-dev ruby-bundler
+grep -i rbenv /home/vagrant/.bash_profile &>/dev/null || {
+  touch /home/vagrant/.bash_profile
+  chown vagrant.vagrant /home/vagrant/.bash_profile
+  echo 'export eval "$(rbenv init -)"' | sudo tee -a /home/vagrant/.bash_profile
+  echo 'true' | sudo tee -a /home/vagrant/.bash_profile
+  echo 'export PATH="$HOME/.rbenv/bin:$PATH"' | sudo tee -a /home/vagrant/.bash_profile
+}
 
